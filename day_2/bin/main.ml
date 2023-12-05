@@ -28,7 +28,7 @@ let valid_round round =
     | (_, _, _) -> false 
 
 let colour_regex colour = Str.regexp ("\\([0-9]+\\) " ^ colour)
-let game_regex = Str.regexp "Game \\(.*\\):"
+let game_regex = Str.regexp "Game \\([0-9]+\\):"
 
 let parse_round round_string = 
   let get_colour colour = 
@@ -46,6 +46,22 @@ let solve_part_1 input =
     |> List.filter ~f: (fun { rounds; _ } -> List.for_all rounds ~f: valid_round)
     |> List.sum (module Int) ~f: (fun { id; _ } -> id)
 
+let max_of_int_opt_list int_opt_list = 
+  List.filter_opt int_opt_list
+  |> List.max_elt ~compare: Int.compare
+  |> unwrap_opts 
+
+let solve_part_2 input = 
+  In_channel.read_lines input 
+  |> List.map ~f: parse_game
+  |> List.sum (module Int) ~f: (fun { rounds; _ }  -> 
+    let reds_list, greens_list, blues_list = List.map rounds ~f: (fun { red; green; blue } -> (red, green, blue)) 
+      |> List.unzip3 in 
+      max_of_int_opt_list reds_list * max_of_int_opt_list greens_list * max_of_int_opt_list blues_list
+  )
+
 let () =  
   let game_ids_sum = solve_part_1 input_file in 
     printf "Solution: Part 1 = %d\n" game_ids_sum; 
+  let minimum_pieces_power_sum = solve_part_2 input_file in 
+    printf "Solution: Part 2 = %d\n" minimum_pieces_power_sum;
