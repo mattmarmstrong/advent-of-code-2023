@@ -1,6 +1,6 @@
 open Core
 
-let input_file = "./input.txt"
+let input_file = "day_1/input.txt"
 
 (** START Part 1 *)
 

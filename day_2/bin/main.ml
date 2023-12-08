@@ -1,6 +1,7 @@
 open Core
+open Util 
 
-let input_file = "./input.txt"
+let input_file = "day_2/input.txt"
 
 type round_row = { red: int option; green: int option; blue: int option;}
 type game = { id: int; rounds: round_row list}
@@ -15,12 +16,6 @@ let try_first_match ~regex string =
     let _ = Str.search_forward (regex) string 0 in
       Some (Str.matched_group 1 string)
   with _ -> None
-
-let split ~char = Str.split (Str.regexp char) 
-
-let get_split_element_at_index str ~char ~index = 
-  let str = split ~char str in 
-    List.nth_exn str index
 
 let valid_round round = 
     match ((unwrap_opts round.red <= 12), (unwrap_opts round.green <= 13), (unwrap_opts round.blue <= 14)) with 
