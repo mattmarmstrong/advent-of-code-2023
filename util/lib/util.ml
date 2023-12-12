@@ -10,3 +10,4 @@ let unwrap opt = match opt with
   | Some(value) -> value 
   | None -> failwith "Encountered None, Panicking!"
 
+let filter_chars ~chars = String.filter ~f: (fun char -> not (String.mem chars char))
