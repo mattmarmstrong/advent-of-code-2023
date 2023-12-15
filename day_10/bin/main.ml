@@ -15,7 +15,6 @@ end
 
 let can_step_into mp (step: Coords.t)   = 
   let valid_steps = match mp with 
-    | 'S' -> Coords.all_adj
     | '|' -> [ Coords.make 0 1; Coords.make 0 (-1); ] 
     | '-' -> [ Coords.make 1 0; Coords.make (-1) 0; ]
     | '7' -> [ Coords.make 1 0; Coords.make 0 1; ] 
@@ -31,7 +30,6 @@ let move_through mp (step: Coords.t) = match mp with
   | 'F' -> Coords.neg_inv step 
   | 'L' -> Coords.inv step 
   | 'J' -> Coords.neg_inv step 
-  | 'S' -> Coords.make 0 0 
   | '.' -> failwith "Reached ground!"
   | _ -> failwith "Input error!"
 
