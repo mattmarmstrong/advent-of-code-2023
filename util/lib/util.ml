@@ -1,5 +1,16 @@
 open Core 
 
+module Coords = struct 
+  type t = { x: int; y: int; }
+
+  let make x y = { x; y; }
+  let all_adj = [make 1 0; make (-1) 0; make 0 1; make 0 (-1)]
+  let equal p1 p2 = (p1.x = p2.x) && (p1.y = p2.y)
+  let add p1 p2 = make (p1.x + p2.x) (p1.y + p2.y) 
+  let inv p = make p.y p.x 
+  let neg_inv p = make (-p.y) (-p.x) 
+end 
+
 let split ~char = Str.split (Str.regexp char) 
 
 let get_split_element_at_index str ~char ~index = 
